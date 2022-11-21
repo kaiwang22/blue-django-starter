@@ -1,13 +1,32 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %}
 
-{% block title %}
-title
-{% endblock %}
+{% block title %} title {% endblock %}
 
-{% block styles %}
-{% endblock %}
+{% block styles %} {% endblock %}
 
 {% block body %}
-<h1>hello!</h1>
-{% endblock %}
+<h1> yo, {{ user.username }}!</h1>
+<h1>fuck you bitch, hoeless ass motherfucker, eat shit cunt</h1>
+<a href="/logout"><button>Logout</button></a>
+<div>
+    <form method="POST" action="/">
+    {% csrf_token %} 
+    <input name = "tweet" type =  "text" placeholder="tweet something" />
+    <input type="submit" value="post tweet" />
+    </form>
+</div>
+<div>
+    {% for tweet in tweets %}
+    <div class="tweet-card">
+      <p>
+        <strong>{{ tweet.author.username }}</strong> |
+        <i>{{ tweet.created_at }}</i>
+      </p>
+      <p>{{ tweet.body }}</p>
+      {% if tweet.author == user %}
+        <a href="delete?id={{tweet.id}}">delete tweet</a>
+    {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endblock %}
