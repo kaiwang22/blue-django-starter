@@ -5,9 +5,14 @@ from main.models import Tweet
 from datetime import datetime
 
 def main_view(request):
-    if request.method == 'POST' and request.POST['body'] != "":
+    print("hi")
+    print(request)
+    print(request.POST)
+    if not request.user.is_authenticated:
+        return redirect('/splash/')
+    if request.method == 'POST' and request.POST['tweet'] != "":
         tweet = Tweet.objects.create(
-            body = request.POST['body'],
+            body = request.POST['tweet'],
             author = request.user,
             created_at = datetime.now()
         )
@@ -46,3 +51,12 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect('/splash')
+
+def like_tweet(request):
+    tweet = Tweet.objects.get(id=request.GET['id'])
+    if len(tweet.likes.filter(username=request.user.username)) == 0:
+        tweet.likes.add(request.user)
+    else:
+        tweet.likes.remove(request.user)
+    tweet.save()
+    return redirect('/')

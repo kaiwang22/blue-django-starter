@@ -1,5 +1,10 @@
 {% load static %}
 
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'home/css/bootstrap.css' %}"
+    />
 <!doctype html>
 <html lang="en">
     <head>
@@ -14,5 +19,8 @@
     </head>
     <body>
         {% block body %}{% endblock %}
+        <div class="logo">
+            <img src="{% static 'twittr.jpeg' %}" class="card-img-top" alt = "..."/>
+             </div>
     </body>
 </html>
